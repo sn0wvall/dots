@@ -1,0 +1,182 @@
+
+# wm independent hotkeys
+#
+
+# terminal emulator
+alt + Return
+	st	
+
+# program launcher
+alt + d 
+	rofi -modi "drun,run" -theme ~/.config/rofi/dmenu.rasi -show drun -font "Source Code Pro for Powerline 10"
+
+# make sxhkd reload its configuration files:
+alt + Escape
+	pkill -USR1 -x sxhkd
+
+# Send System Information
+alt + Tab
+	notify-send "$(/home/beta/.bin/barOutput)" "$(bspc wm -g | cut -d':' -f2-10 | sed 's/:/ /g ; s/F/O/g ; s/f//g' | grep -E -o 'o.\{0,2\}|O.\{0,2\}' | tr -d '\n' | tr -d 'o' | sed 's/O/O /g')"
+
+#
+# bspwm hotkeys
+#
+
+# quit/restart bspwm
+alt + shift + e
+	bspc {quit,wm -r}
+
+# close and kill
+alt + shift + q
+	bspc node -{c,k}
+
+# alternate between the tiled and monocle layout
+alt + m
+	bspc desktop -l next
+
+# swap the current node and the biggest node
+alt + g
+	bspc node -s biggest
+
+#
+# state/flags
+#
+
+# set the window state
+alt + {t,shift + t,s,f}
+	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+
+# set the node flags
+alt + ctrl + {m,x,y,z}
+	bspc node -g {marked,locked,sticky,private}
+
+#
+# focus/swap
+#
+
+# focus the node in the given direction
+alt + Left
+	bspc node -f west
+alt + Right
+	bspc node -f east
+alt + Down
+	bspc node -f south
+alt + Up
+	bspc node -f north
+
+# Move the node in the given direction
+
+alt + shift + Left
+	bspc node -s west
+alt + shift + Right
+	bspc node -s east
+alt + shift + Down
+	bspc node -s south
+alt + shift + Up
+	bspc node -s north
+
+
+# focus the next/previous node in the current desktop
+alt + {_,shift + }u
+	bspc node -f {next,prev}.local
+
+# focus the next/previous desktop in the current monitor
+alt + bracket{left,right}
+	bspc desktop -f {prev,next}.local
+
+# focus the last node/desktop
+alt + {grave}
+	bspc {node,desktop} -f last
+
+# focus the older or newer node in the focus history
+alt + {o,i}
+	bspc wm -h off; \
+	bspc node {older,newer} -f; \
+	bspc wm -h on
+
+# focus or send to the given desktop
+alt + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} '^{1-9,10}'
+
+#
+# preselect
+#
+
+# preselect the direction
+alt + ctrl + {h,j,k,l}
+	bspc node -p {west,south,north,east}
+
+# preselect the ratio
+alt + ctrl + {1-9}
+	bspc node -o 0.{1-9}
+
+# cancel the preselection for the focused node
+alt + ctrl + space
+	bspc node -p cancel
+
+# cancel the preselection for the focused desktop
+alt + ctrl + shift + space
+	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+#
+# move/resize
+#
+
+# expand a window by moving one of its side outward
+alt + r + {h,j,k,l}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# contract a window by moving one of its side inward
+alt + r + shift + {h,j,k,l}
+	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# move a floating window
+alt + {Left,Down,Up,Right}
+	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+
+
+# Shortcuts
+
+alt + q
+	firefox	
+
+alt + p
+	urxvt -e cmus	
+
+alt + c
+	scrot '%d-%m-%Y-%R:%S-scrot.png' -e 'mv $f ~/media/scrot'
+
+alt + b
+	st -e ranger
+
+#XF86 Keys
+
+XF86AudioRaiseVolume 
+	amixer sset 'Master' 5%+
+
+XF86AudioLowerVolume
+	amixer sset 'Master' 5%-
+
+XF86MonBrightnessUp
+	xbacklight +20
+
+XF86MonBrightnessDown
+	xbacklight -20
+
+XF86AudioPlay
+	cmus-remote -u
+
+XF86AudioNext
+	cmus-remote -n
+
+XF86AudioPrev
+	cmus-remote -r
+
+XF86AudioStop
+	cmus-remote -s
+
+XF86Search
+	xsel -bc && i3lock --pass-media-keys -i ~/media/images/bkg/lockBackground.png --insidecolor=00000000 --ringcolor=000000ff --timestr=%H:%M:%S --timecolor=ffffffff --keyhlcolor=333333ff --bshlcolor=333333ff --separatorcolor=333333ff --linecolor=333333ff --insidevercolor=333333ff & playerctl pause
+
+
