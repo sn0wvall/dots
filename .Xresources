@@ -1,0 +1,48 @@
+! Fonts
+
+URxvt*font: xft:Source Code Pro for Powerline:size=9.5
+
+! Miscellaneous
+
+URxvt.keysym.Shift-Up: 		        cd ~	
+URxvt.scrollBar:                        false
+URxvt.cursorUnderline:                  true
+URxvt.cursorBlink:                      false
+URxvt.internalBorder: 			15
+URxvt.externalBorder:		        15	
+
+! Colors
+
+*.foreground: #F2F2F2
+*.background: #404040
+! Black Dark
+*.color0:     #666666			
+! Black Light
+*.color8:     #a6a6a6	
+! Red Dark
+*.color1:     #ff3333
+! Red Light
+*.color9:     #FF6E67
+! Green Dark
+*.color2:     #00b33c
+! Green Light
+*.color10:    #33ff77
+! Yellow Dark
+*.color3:     #F1FA8C
+! Yellow Light
+*.color11:    #F4F99D
+! Blue Dark
+*.color4:     #0099ff
+! Blue Light
+*.color12:    #1aa3ff
+! Magenta Dark
+*.color5:     #cc66ff
+! Magenta Light
+*.color13:    #ff80ff
+! Cyan Dark 
+*.color6:     #8BE9FD
+! Cyan Light
+*.color14:    #9AEDFE
+! White
+*.color7:     #ffffff
+*.color15:    #ffffff
