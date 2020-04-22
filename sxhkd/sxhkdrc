@@ -1,4 +1,4 @@
-
+#
 # wm independent hotkeys
 #
 
@@ -16,7 +16,12 @@ alt + Escape
 
 # Send System Information
 alt + Tab
-	notify-send "$(/home/beta/.bin/barOutput)" "$(bspc wm -g | cut -d':' -f2-10 | sed 's/:/ /g ; s/F/O/g ; s/f//g' | grep -E -o 'o.\{0,2\}|O.\{0,2\}' | tr -d '\n' | tr -d 'o' | sed 's/O/O /g')"
+	notify-send "$(~/.bin/barOutput)" "$(bspc wm -g | cut -d':' -f2-10 | sed 's/:/ /g ; s/F/O/g ; s/f//g' | grep -E -o 'o.\{0,2\}|O.\{0,2\}' | tr -d '\n' | tr -d 'o' | sed 's/O/O /g')"
+
+# Send System Information (Verbose)
+
+alt + shift + Tab
+	notify-send "$(~/.bin/barOutput verbose)" "$(bspc wm -g | cut -d':' -f2-10 | sed 's/:/ /g ; s/F/O/g ; s/f//g' | grep -E -o 'o.\{0,2\}|O.\{0,2\}' | tr -d '\n' | tr -d 'o' | sed 's/O/O /g')"
 
 #
 # bspwm hotkeys
@@ -135,11 +140,11 @@ alt + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
 
 
-
+#
 # Shortcuts
-
+#
 alt + q
-	firefox	
+	firefox
 
 alt + p
 	urxvt -e cmus	
@@ -150,7 +155,12 @@ alt + c
 alt + b
 	st -e ranger
 
+#
 #XF86 Keys
+#
+
+XF86AudioMute
+	pactl set-sink-mute 0 toggle
 
 XF86AudioRaiseVolume 
 	amixer sset 'Master' 5%+
@@ -177,6 +187,5 @@ XF86AudioStop
 	cmus-remote -s
 
 XF86Search
-	xsel -bc && i3lock --pass-media-keys -i ~/media/images/bkg/lockBackground.png --insidecolor=00000000 --ringcolor=000000ff --timestr=%H:%M:%S --timecolor=ffffffff --keyhlcolor=333333ff --bshlcolor=333333ff --separatorcolor=333333ff --linecolor=333333ff --insidevercolor=333333ff & playerctl pause
-
+	~/.bin/lock
 

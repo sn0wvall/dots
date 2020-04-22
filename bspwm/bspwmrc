@@ -1,17 +1,13 @@
 #!/bin/sh
 
-killall sxhkd
+pkill sxhkd
 sxhkd &
 bspc rule -r "*"
 
 # startup execs
 
-xwallpaper --zoom media/images/bkg/abandonedBoat.png &
+xwallpaper --zoom media/images/bkg/blueBackground.png &
 unclutter -idle 1 -jitter 30 &
-xrdb ~/.Xresources
-dunst &
-~/.bin/monitorConnections &
-~/.bin/touchpadSetup
 
 w1=""
 w2=""
@@ -35,36 +31,3 @@ bspc config gapless_monocle      true
 
 # Stop Focus Stealing
 bspc config ignore_ewmh_focus true
-
-# misc
-
-bspc rule -a "Zathura"					state=tiled
-
-# w1
-
-bspc rule -a "Firefox Developer Edition" 		desktop=^1
-
-# w3
-
-bspc rule -a "Keybase"					desktop=^3
-bspc rule -a "discord"					desktop=^3
-bspc rule -a "Riot"					desktop=^3
-bspc rule -a "Signal"					desktop=^3
-
-# w4
-
-bspc rule -a "code-oss"					desktop=^4
-
-# w5
-
-bspc rule -a "Steam"					desktop=^5
-bspc rule -a "Lutris"					desktop=^5
-
-# w6
-
-bspc rule -a "Notable"					desktop=^6
-bspc rule -a "libreoffice"				desktop=^6
-
-# w9
-
-bspc rule -a "URxvt"					desktop=^9
