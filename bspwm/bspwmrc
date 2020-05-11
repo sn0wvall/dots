@@ -1,23 +1,18 @@
 #!/bin/sh
 
-pkill sxhkd
+pgrep sxhkd && pkill sxhkd
 sxhkd &
 bspc rule -r "*"
 
-# startup execs
-
-xwallpaper --zoom media/images/bkg/blueBackground.png &
-unclutter -idle 1 -jitter 30 &
-
-w1=""
-w2=""
-w3=""
-w4=""
-w5=""
+w1=""
+w2=""
+w3=""
+w4=""
+w5=""
 w6=""
 w7=""
 w8=""
-w9=""
+w9=""
 
 bspc monitor -d $w1 $w2 $w3 $w4 $w5 $w6 $w7 $w8 $w9
 
@@ -28,6 +23,48 @@ bspc config split_ratio          0.52
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
+# Cleanup
+
+pgrep unclutter && pkill unclutter
+pgrep redshift && pkill redshift
+#ps -aux | grep checkStartup | grep -v grep && pkill
+
+
+# Autostarts
+
+unclutter -idle 1 -jitter 30 & 
+redshift -l 51:-0.1 &
+~/.bin/checkStartup &
 
 # Stop Focus Stealing
 bspc config ignore_ewmh_focus true
+
+# misc
+
+bspc rule -a "Zathura"					state=tiled
+
+# w1
+
+bspc rule -a "Firefox"			 		desktop=^1
+bspc rule -a "Chromium-browser"				desktop=^1
+
+# w3
+
+# w4
+
+bspc rule -a "Riot"					desktop=^4
+bspc rule -a "Signal"					desktop=^4
+
+# w5
+
+bspc rule -a "discord"					desktop=^5
+bspc rule -a "Steam"					desktop=^5
+bspc rule -a "Lutris"					desktop=^5
+
+# w6
+
+bspc rule -a "Notable"					desktop=^6
+
+# w9
+
+bspc rule -a "URxvt"					desktop=^9

@@ -23,6 +23,20 @@ alt + Tab
 alt + shift + Tab
 	notify-send "$(~/.bin/barOutput verbose)" "$(bspc wm -g | cut -d':' -f2-10 | sed 's/:/ /g ; s/F/O/g ; s/f//g' | grep -E -o 'o.\{0,2\}|O.\{0,2\}' | tr -d '\n' | tr -d 'o' | sed 's/O/O /g')"
 
+# Check for Package Updates
+
+alt + shift + grave
+	~/.bin/checkPackages	
+
+# Check playing music
+
+alt + grave
+	~/.bin/cmusNotify
+
+# Check tasks
+
+alt + shift + plus
+	notify-send "$(~/toofoo/main.sh)"  	# https://github.com/sn0wvall/toofoo
 #
 # bspwm hotkeys
 #
@@ -48,7 +62,7 @@ alt + g
 #
 
 # set the window state
-alt + {t,shift + t,s,f}
+alt + {t,shift + t,j,f}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
@@ -90,8 +104,8 @@ alt + bracket{left,right}
 	bspc desktop -f {prev,next}.local
 
 # focus the last node/desktop
-alt + {grave}
-	bspc {node,desktop} -f last
+#alt + {grave}
+#	bspc {node,desktop} -f last
 
 # focus the older or newer node in the focus history
 alt + {o,i}
@@ -143,17 +157,30 @@ alt + {Left,Down,Up,Right}
 #
 # Shortcuts
 #
+
 alt + q
 	firefox
 
 alt + p
-	urxvt -e cmus	
+	urxvt -e cmus
 
 alt + c
 	scrot '%d-%m-%Y-%R:%S-scrot.png' -e 'mv $f ~/media/scrot'
 
 alt + b
 	st -e ranger
+
+alt + n
+	st -e newsboat
+
+alt + shift + s
+	~/.apps/ungoogled-chromium/chrome -incognito
+
+alt + shift + a
+	firefox -P personal
+
+alt + shift + w
+	firefox -P social
 
 #
 #XF86 Keys
@@ -163,16 +190,16 @@ XF86AudioMute
 	pactl set-sink-mute 0 toggle
 
 XF86AudioRaiseVolume 
-	amixer sset 'Master' 5%+
+	~/.bin/volumeEdit up
 
 XF86AudioLowerVolume
-	amixer sset 'Master' 5%-
+	~/.bin/volumeEdit down
 
 XF86MonBrightnessUp
-	xbacklight +20
+	xbacklight +10
 
 XF86MonBrightnessDown
-	xbacklight -20
+	xbacklight -10
 
 XF86AudioPlay
 	cmus-remote -u
