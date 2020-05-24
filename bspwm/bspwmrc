@@ -4,7 +4,7 @@ pgrep sxhkd && pkill sxhkd
 sxhkd &
 bspc rule -r "*"
 
-w1=""
+w1="" #
 w2=""
 w3=""
 w4=""
@@ -27,14 +27,13 @@ bspc config gapless_monocle      true
 
 pgrep unclutter && pkill unclutter
 pgrep redshift && pkill redshift
-#ps -aux | grep checkStartup | grep -v grep && pkill
-
 
 # Autostarts
 
 unclutter -idle 1 -jitter 30 & 
 redshift -l 51:-0.1 &
 ~/.bin/checkStartup &
+~/.bin/monitorBattery
 
 # Stop Focus Stealing
 bspc config ignore_ewmh_focus true

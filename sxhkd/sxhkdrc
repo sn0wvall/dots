@@ -16,12 +16,12 @@ alt + Escape
 
 # Send System Information
 alt + Tab
-	notify-send "$(~/.bin/barOutput)" "$(bspc wm -g | cut -d':' -f2-10 | sed 's/:/ /g ; s/F/O/g ; s/f//g' | grep -E -o 'o.\{0,2\}|O.\{0,2\}' | tr -d '\n' | tr -d 'o' | sed 's/O/O /g')"
+	 dunstify -r 1000 "$(~/.bin/barOutput)" "$(bspc wm -g | cut -d':' -f2-10 | sed 's/:/ /g ; s/F/O/g ; s/f//g' | grep -E -o 'o.\{0,2\}|O.\{0,2\}' | tr -d '\n' | tr -d 'o' | sed 's/O/O /g')"
 
 # Send System Information (Verbose)
 
 alt + shift + Tab
-	notify-send "$(~/.bin/barOutput verbose)" "$(bspc wm -g | cut -d':' -f2-10 | sed 's/:/ /g ; s/F/O/g ; s/f//g' | grep -E -o 'o.\{0,2\}|O.\{0,2\}' | tr -d '\n' | tr -d 'o' | sed 's/O/O /g')"
+	dunstify -r 1000 "$(~/.bin/barOutput verbose)" "$(bspc wm -g | cut -d':' -f2-10 | sed 's/:/ /g ; s/F/O/g ; s/f//g' | grep -E -o 'o.\{0,2\}|O.\{0,2\}' | tr -d '\n' | tr -d 'o' | sed 's/O/O /g')"
 
 # Check for Package Updates
 
@@ -36,7 +36,7 @@ alt + grave
 # Check tasks
 
 alt + shift + plus
-	notify-send "$(~/toofoo/main.sh)"  	# https://github.com/sn0wvall/toofoo
+	notify-send "$(~/.apps/toofoo/main.sh)"
 #
 # bspwm hotkeys
 #
@@ -182,6 +182,19 @@ alt + shift + a
 alt + shift + w
 	firefox -P social
 
+alt + shift + Delete
+	notify-send " Disconnecting from Home" & nmcli c down Home || notify-send " Error Occured Disconnecting"
+
+alt + Delete
+	notify-send " Disconnecting from VPN" & nmcli c down VPN || notify-send " Error Occured Disconnecting"
+	
+
+alt + shift + Insert
+	notify-send " Connecting to Home" & nmcli c up Home || notify-send " Error Occured Connecting"
+
+alt + Insert
+	notify-send " Connecting to VPN" & nmcli c up VPN || notify-send " Error Occured Connecting"
+
 #
 #XF86 Keys
 #
@@ -196,10 +209,10 @@ XF86AudioLowerVolume
 	~/.bin/volumeEdit down
 
 XF86MonBrightnessUp
-	xbacklight +10
+	xbacklight +10 && dunstify -r 1002 " $(xbacklight | cut -d '.' -f1)%"
 
 XF86MonBrightnessDown
-	xbacklight -10
+	xbacklight -10 && dunstify -r 1002 " $(xbacklight | cut -d '.' -f1)%"
 
 XF86AudioPlay
 	cmus-remote -u
@@ -216,3 +229,5 @@ XF86AudioStop
 XF86Search
 	~/.bin/lock
 
+Print
+	nmcli networking | grep disabled && nmcli networking on || nmcli networking off && notify-send " Networking $(nmcli networking)"

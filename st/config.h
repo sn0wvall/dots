@@ -5,7 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Source Code Pro for Powerline:size=9.5:antialias=true:autohint=true";
+/*0.8.2*/
+static char *font = "Source Code Pro For Powerline:size=9.5:antialias=true:autohint=true";
 static int borderpx = 30;
 
 /*
@@ -16,7 +17,7 @@ static int borderpx = 30;
  * 4: value of shell in /etc/passwd
  * 5: value of shell in config.h
  */
-static char *shell = "/bin/zsh";
+static char *shell = "/bin/sh";
 char *utmp = NULL;
 char *stty_args = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 
@@ -84,25 +85,24 @@ unsigned int tabspaces = 8;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
-	/* 8 normal colors */
-	"#666666",
-	"#ff3333",
-	"#00b33c",
-	"#F1FA8C",
-	"#0099ff",
-	"#cc66ff",
-	"#8BE9FD",
-	"#ffffff",
-
-	/* 8 bright colors */
-	"#a6a6a6",
-	"#FF6E67",
-	"#33ff77",
-	"#F4F99D",
-	"#1aa3ff",
-	"#ff80ff",
-	"#9AEDFE",
-	"#ffffff",
+	 /* 8 normal colors */
+         "#666666",
+         "#ff3333",
+         "#00b33c",
+         "#F1FA8C",
+         "#0099ff",
+         "#cc66ff",
+         "#8BE9FD",
+         "#ffffff",
+         /* 8 bright colors */
+         "#a6a6a6",
+         "#FF6E67",
+         "#33ff77",
+         "#F4F99D",
+         "#1aa3ff",
+         "#ff80ff",
+         "#9AEDFE",
+         "#ffffff",
 
 	[255] = 0,
 
@@ -116,9 +116,9 @@ static const char *colorname[] = {
  * foreground, background, cursor, reverse cursor
  */
 unsigned int defaultfg = 7;
-unsigned int defaultbg = 256;
+unsigned int defaultbg = 0;
 static unsigned int defaultcs = 7;
-static unsigned int defaultrcs = 8;
+static unsigned int defaultrcs = 7;
 
 /*
  * Default shape of cursor
@@ -127,7 +127,7 @@ static unsigned int defaultrcs = 8;
  * 6: Bar ("|")
  * 7: Snowman ("☃")
  */
-static unsigned int cursorshape = 4;
+static unsigned int cursorshape = 2;
 
 /*
  * Default columns and rows numbers
@@ -175,10 +175,10 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
-	{ ShiftMask,		XK_Down,	kscrolldown,	{.i =  -1} },
-	{ ShiftMask,		XK_Up,		kscrollup,	{.i =  -1} },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
+	{ ShiftMask,            XK_Up,     kscrollup,      {.i = -1} },
+	{ ShiftMask,            XK_Down,   kscrolldown,    {.i = -1} },
 };
 
 /*
