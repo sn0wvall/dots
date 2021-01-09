@@ -1,7 +1,5 @@
 #!/bin/sh
 
-pgrep sxhkd && pkill sxhkd
-sxhkd &
 bspc rule -r "*"
 
 w1="" #
@@ -9,19 +7,29 @@ w2=""
 w3=""
 w4=""
 w5=""
-w6=""
-w7=""
-w8=""
-w9=""
+w6=""
+w7=""
+w8="🖥"
+w9="🖥"
 
-bspc monitor -d $w1 $w2 $w3 $w4 $w5 $w6 $w7 $w8 $w9
+bspc monitor eDP1 -d $w1 $w2 $w3 $w4 $w5 $w6 $w7
+bspc monitor DP1 -d $w8 $w9
+bspc monitor DP1 --swap "^2"
 
-bspc config border_width         0
-bspc config window_gap          25
+bspc config border_width         	2
+bspc config window_gap          	20
+bspc config focus_follows_pointer 	true
+bspc config pointer_follows_focus 	true
+bspc config pointer_modifier 		control
+bspc config ignore_ewmh_focus 		true
 
-bspc config split_ratio          0.52
-bspc config borderless_monocle   true
-bspc config gapless_monocle      true
+bspc config focused_border_color	\#ffffff
+bspc config normal_border_color		\#000000
+bspc config active_border_color		\#000000
+
+bspc config split_ratio          	0.52
+bspc config borderless_monocle   	true
+bspc config gapless_monocle      	true
 
 # Cleanup
 
@@ -30,7 +38,7 @@ pgrep redshift && pkill redshift
 
 # Autostarts
 
-unclutter -idle 1 -jitter 30 & 
+unclutter -idle 5 -jitter 30 & 
 redshift -l 51:-0.1 &
 ~/.bin/checkStartup &
 ~/.bin/monitorBattery
@@ -41,11 +49,16 @@ bspc config ignore_ewmh_focus true
 # misc
 
 bspc rule -a "Zathura"					state=tiled
+bspc rule -a "Veracrypt"				state=tiled
+
+bspc rule -a "MEGAsync"					state=floating
+bspc rule -a "Minecraft 1.16.1"				state=fullscreen
+bspc rule -a "Minecraft* 1.16.1"			state=fullscreen
+
+bspc rule -a "firefox"			 		border=off
+bspc rule -a "MEGAsync"			 		border=off
 
 # w1
-
-bspc rule -a "Firefox"			 		desktop=^1
-bspc rule -a "Chromium-browser"				desktop=^1
 
 # w3
 
@@ -53,17 +66,18 @@ bspc rule -a "Chromium-browser"				desktop=^1
 
 bspc rule -a "Riot"					desktop=^4
 bspc rule -a "Signal"					desktop=^4
+bspc rule -a "whatsapp-nativefier-d40211"		desktop=^4
+bspc rule -a "discord"					desktop=^4
 
 # w5
 
-bspc rule -a "discord"					desktop=^5
-bspc rule -a "Steam"					desktop=^5
 bspc rule -a "Lutris"					desktop=^5
+bspc rule -a "Minecraft 1.16.1"				desktop=^5
+bspc rule -a "Minecraft* 1.16.1"			desktop=^5
 
 # w6
 
-bspc rule -a "Notable"					desktop=^6
+# w8
 
-# w9
-
-bspc rule -a "URxvt"					desktop=^9
+bspc rule -a "URxvt"					desktop=^8
+bspc rule -a "Spotify"					desktop=^8

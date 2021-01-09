@@ -16,28 +16,14 @@ alt + Escape
 
 # Send System Information
 alt + Tab
-	 dunstify -r 1000 "$(~/.bin/barOutput)" "$(bspc wm -g | cut -d':' -f2-10 | sed 's/:/ /g ; s/F/O/g ; s/f//g' | grep -E -o 'o.\{0,2\}|O.\{0,2\}' | tr -d '\n' | tr -d 'o' | sed 's/O/O /g')"
+	 dunstify -r 1000 "$(/home/beta/.bin/barOutput)" "$(bspc wm -g | cut -d':' -f2-14 | sed 's/:/ /g ; s/F/O/g ; s/f//g' | grep -E -o 'o.\{0,2\}|O.\{0,2\}' | tr -d '\n' | tr -d 'o' | sed 's/O/O /g')"
 
 # Send System Information (Verbose)
 
 alt + shift + Tab
-	dunstify -r 1000 "$(~/.bin/barOutput verbose)" "$(bspc wm -g | cut -d':' -f2-10 | sed 's/:/ /g ; s/F/O/g ; s/f//g' | grep -E -o 'o.\{0,2\}|O.\{0,2\}' | tr -d '\n' | tr -d 'o' | sed 's/O/O /g')"
+	dunstify -r 1000 "$(/home/beta/.bin/barOutput verbose)" "$(bspc wm -g | cut -d':' -f2-10 | sed 's/:/ /g ; s/F/O/g ; s/f//g' | tr ' ' '\n' | grep -E '\o|\O'| tr '\n' ' ' | tr -d 'o')"
 
-# Check for Package Updates
 
-alt + shift + grave
-	~/.bin/checkPackages	
-
-# Check playing music
-
-alt + grave
-	~/.bin/cmusNotify
-
-# Check tasks
-
-alt + shift + plus
-	notify-send "$(~/.apps/toofoo/main.sh)"
-#
 # bspwm hotkeys
 #
 
@@ -47,7 +33,7 @@ alt + shift + e
 
 # close and kill
 alt + shift + q
-	bspc node -{c,k}
+	bspc node -c
 
 # alternate between the tiled and monocle layout
 alt + m
@@ -103,9 +89,9 @@ alt + {_,shift + }u
 alt + bracket{left,right}
 	bspc desktop -f {prev,next}.local
 
-# focus the last node/desktop
-#alt + {grave}
-#	bspc {node,desktop} -f last
+# focus the last node
+alt + grave
+	bspc node -f last
 
 # focus the older or newer node in the focus history
 alt + {o,i}
@@ -122,7 +108,7 @@ alt + {_,shift + }{1-9,0}
 #
 
 # preselect the direction
-alt + ctrl + {h,j,k,l}
+alt + ctrl + {Left,Down,Up,Right}
 	bspc node -p {west,south,north,east}
 
 # preselect the ratio
@@ -142,15 +128,15 @@ alt + ctrl + shift + space
 #
 
 # expand a window by moving one of its side outward
-alt + r + {h,j,k,l}
-	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+alt + {h,j,k,l}
+	bspc node -z {left -40 0,bottom 0 40,top 0 -40,right 40 0}
 
 # contract a window by moving one of its side inward
-alt + r + shift + {h,j,k,l}
-	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+alt + shift + {h,j,k,l}
+	bspc node -z {right -40 0,top 0 40,bottom 0 -40,left 40 0}
 
 # move a floating window
-alt + {Left,Down,Up,Right}
+alt + ctrl + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
 
 
@@ -158,23 +144,60 @@ alt + {Left,Down,Up,Right}
 # Shortcuts
 #
 
-alt + q
-	firefox
-
 alt + p
 	urxvt -e cmus
 
-alt + c
-	scrot '%d-%m-%Y-%R:%S-scrot.png' -e 'mv $f ~/media/scrot'
+alt + shift + p
+	~/.bin/bspwmSpotify
 
-alt + b
-	st -e ranger
+alt + c
+	sleep 0.2 && scrot -s -o '/tmp/image.png' -e 'xclip -selection c -t image/png < $f'
+
+alt + ctrl + c
+	scrot '%d-%m-%Y-%R:%S-scrot.png' -e 'mv $f ~/media/scrot'
 
 alt + n
 	st -e newsboat
 
+alt + b
+	st -e lf 
+
+alt + shift + c 
+	zathura 
+
+alt + shift + y
+	notify-send "🎲 $(~/.bin/dndRoll)"
+
+alt + shift + v
+	notify-send "$(~/.bin/latinDictionary)" 
+
+alt + shift + d
+	~/.bin/demoji
+
+alt + shift + g
+	~/.bin/presetStart
+
+alt + shift + grave
+	~/.bin/checkPackages	
+
+alt + grave
+	~/.bin/cmusNotify
+
+alt + shift + plus
+	~/.bin/bspwmGaps up
+
+alt + shift + minus
+	~/.bin/bspwmGaps down
+
+#
+# Browsers
+#
+
 alt + shift + s
 	~/.apps/ungoogled-chromium/chrome -incognito
+
+alt + q
+	firefox
 
 alt + shift + a
 	firefox -P personal
@@ -182,25 +205,19 @@ alt + shift + a
 alt + shift + w
 	firefox -P social
 
-alt + shift + Delete
-	notify-send " Disconnecting from Home" & nmcli c down Home || notify-send " Error Occured Disconnecting"
+#
+# Connections And Toggles
+#
 
-alt + Delete
-	notify-send " Disconnecting from VPN" & nmcli c down VPN || notify-send " Error Occured Disconnecting"
-	
-
-alt + shift + Insert
-	notify-send " Connecting to Home" & nmcli c up Home || notify-send " Error Occured Connecting"
-
-alt + Insert
-	notify-send " Connecting to VPN" & nmcli c up VPN || notify-send " Error Occured Connecting"
+Print
+	dunstify -r 9000 "📩  Notifications Toggled" && sleep 2 && notify-send "DUNST_COMMAND_TOGGLE" 
 
 #
-#XF86 Keys
+# XF86 Keys
 #
 
 XF86AudioMute
-	pactl set-sink-mute 0 toggle
+	~/.bin/muteControl
 
 XF86AudioRaiseVolume 
 	~/.bin/volumeEdit up
@@ -209,25 +226,22 @@ XF86AudioLowerVolume
 	~/.bin/volumeEdit down
 
 XF86MonBrightnessUp
-	xbacklight +10 && dunstify -r 1002 " $(xbacklight | cut -d '.' -f1)%"
+	xbacklight +10
 
 XF86MonBrightnessDown
-	xbacklight -10 && dunstify -r 1002 " $(xbacklight | cut -d '.' -f1)%"
+	xbacklight -10
 
 XF86AudioPlay
-	cmus-remote -u
+	cmus-remote -u & playerctl play-pause -p spotify
 
 XF86AudioNext
-	cmus-remote -n
+	cmus-remote -n & playerctl next -p spotify
 
 XF86AudioPrev
-	cmus-remote -r
+	cmus-remote -r & playerctl previous -p spotify
 
 XF86AudioStop
-	cmus-remote -s
+	cmus-remote -s & playerctl stop -a
 
 XF86Search
 	~/.bin/lock
-
-Print
-	nmcli networking | grep disabled && nmcli networking on || nmcli networking off && notify-send " Networking $(nmcli networking)"
